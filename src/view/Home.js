@@ -40,7 +40,37 @@ class Home extends Component {
 
             ]
         }
+        this.renderLink = this.renderLink.bind(this);
 
+    }
+
+    renderLink () {
+        return this.state.links.map(item => {
+
+            if (typeof item.submenu === 'undefined') {
+                return (
+                    <li>
+                        {item.link_title}
+                    </li>
+                )
+            }
+
+            return (
+                <li>
+                    <div className="d-flex justify-content-between">
+                        <span className="sub-menubar-btn">{item.link_title}</span> 
+                        <img src={arrow} alt="" />
+                    </div>
+                    <ul className="sub-menubar__link">
+                        {item.submenu.map(sub => (
+                            <li>{sub}</li>
+                        ))}
+                    </ul>
+                </li>
+
+            );
+
+        })
     }
 
     render() {
@@ -62,37 +92,10 @@ class Home extends Component {
 
                 <div className="side-menubar">
                     <ul className="side-menubar__link">
-                        {this.state.links.map(item => {
-
-                            if (typeof item.submenu === 'undefined') {
-                                return (
-                                    <li>
-                                        {item.link_title}
-                                    </li>
-                                )
-                            }
-
-                            return (
-                                <li>
-                                    <div className="d-flex justify-content-between">
-                                        <span className="sub-menubar-btn">{item.link_title}</span> 
-                                        <img src={arrow} alt="" />
-                                    </div>
-                                    <ul className="sub-menubar__link">
-                                        {item.submenu.map(sub => (
-                                            <li>{sub}</li>
-                                        ))}
-                                    </ul>
-                                </li>
-
-                            );
-
-                        })}
-
+                        {this.renderLink()}
                     </ul>
-
-
                 </div>
+                {/* side-menubar */}
 
             </div>
         );
